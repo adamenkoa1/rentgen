@@ -5,6 +5,7 @@
   "description": "Original 95sales clinic demo assets",
   "scripts": {
     "dev": "node server.mjs",
-    "start": "node server.mjs"
+    "start": "node server.mjs",
+    "build:pages": "node scripts/build-pages.mjs"
   }
 }

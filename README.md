@@ -23,3 +23,7 @@ The original X-ray image module is included at `/xray/img.js`. The HTML bootstra
 The original Three.js module is included at `/vendor/three-0169.min.js`. The HAR supplied the original `/body3d/m-th.json` and `/body3d/m-th.bin` body model (20,859 vertices and 41,717 triangles). This variant is included; other sex/build variants have not been supplied.
 
 The original dental modules are included at `/dent3d/patient.js` and `/dent3d/jaw.js`, and import successfully with the supplied Three.js library. The original `/dent3d/teeth.json` metadata and matching `/dent3d/teeth.bin` geometry are included. All four tooth meshes have valid buffer bounds and vertex indices.
+
+## GitHub Pages publication
+
+Run `npm run build:pages` to generate `dist/` for `https://adamenkoa1.github.io/rentgen/`. This adapts resource paths in the generated copy; original application assets remain unchanged. The generated site is published to the `gh-pages` branch. In GitHub repository Settings → Pages, choose Deploy from a branch, `gh-pages`, `/ (root)`, then Save. Publication still requires GitHub Pages to be enabled; pushing a branch alone does not establish a live website. After future changes rebuild and republish the generated files.
