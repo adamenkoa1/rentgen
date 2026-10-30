@@ -16,11 +16,11 @@ Optional resources still absent include additional `/body3d/` model variants and
 
 The supplied HAR restored the original `/manifest.webmanifest`, `/brand/95-64.png`, and `/icons/icon-192.png`. The favicon and touch icon are enabled. The manifest is retained but not linked because its referenced `/icons/icon-512.png` and `/icons/maskable-512.png` are still missing; full PWA readiness is not claimed. All supplied original CSS, bootstrap JavaScript, logo, and font binaries are retained.
 
-The HAR recordings supplied six original avatars: `/demo/u1.png`, `/demo/u2.png`, `/demo/u3.png`, `/demo/u4.png`, `/demo/u6.png`, and `/demo/u9.png`. All are included. Other avatars have not been supplied. One body-model variant is available as described below. The HAR itself is kept outside the application checkout and is not served or included in the site.
+The HAR recordings supplied six original avatars: `/demo/u1.png`, `/demo/u2.png`, `/demo/u3.png`, `/demo/u4.png`, `/demo/u6.png`, and `/demo/u9.png`. All are included. Other avatars have not been supplied. Two body-model variants are available as described below. The HAR itself is kept outside the application checkout and is not served or included in the site.
 
 The original X-ray image module is included at `/xray/img.js`. The HTML bootstrap preserves the source hostname’s X-ray demo selection on local hosts; an explicit `org` query retains the original application override. The results viewer generates the original illustrative SVG demo images locally, without additional image files.
 
-The original Three.js module is included at `/vendor/three-0169.min.js`. The HAR supplied the original `/body3d/m-th.json` and `/body3d/m-th.bin` body model (20,859 vertices and 41,717 triangles). This variant is included; other sex/build variants have not been supplied.
+The original Three.js module is included at `/vendor/three-0169.min.js`. The HAR supplied the original `/body3d/m-th.json` and `/body3d/m-th.bin` body model (20,859 vertices and 41,717 triangles). The additional original female model `/body3d/f-ob.json` and `/body3d/f-ob.bin` is also included. Other sex/build variants have not been supplied.
 
 The original dental modules are included at `/dent3d/patient.js` and `/dent3d/jaw.js`, and import successfully with the supplied Three.js library. The original `/dent3d/teeth.json` metadata and matching `/dent3d/teeth.bin` geometry are included. All four tooth meshes have valid buffer bounds and vertex indices.
 
