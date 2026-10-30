@@ -1,0 +1,135 @@
+<!DOCTYPE html><html><head><base href="/rentgen/"><meta charset="utf-8"><meta name="download_date" content="2026-10-30T10:42:52.910Z"/>
+
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Вход в CRM</title>
+
+
+
+<link rel="icon" type="image/png" href="/rentgen/brand/95-64.png">
+<link rel="apple-touch-icon" href="/rentgen/icons/icon-192.png">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="95sales CRM">
+<meta name="application-name" content="95sales CRM">
+
+
+<link href="_external/fonts.googleapis.com/css2.family_Unbounded_wght_500_700_family_Manrope_wght_400_500_600_700_800_family_JetBrains_Mono_wght_400_500_700_display_swap.css" rel="stylesheet">
+<script>/* тема: crm:theme = light | dark | auto (по системе); ставим до отрисовки — без вспышки белого */(function(){var t="light";try{t=localStorage.getItem("crm:theme")||"light"}catch(e){}var d=t==="dark"||(t==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches);if(d)document.documentElement.setAttribute("data-theme","dark")})()</script>
+<script>/* Android (приложение из Google Play и Chrome): WebView не тянет размытые анимированные фоны входа — облегчённый фон (landing.css, html.andr) */if(/Android/i.test(navigator.userAgent))document.documentElement.classList.add("andr")</script>
+<script>/* новый вид Liquid — везде (владелец 2026-10-21: «на всех демо и везде только новый дизайн»); старый вид только для проверки вёрстки — localStorage crm:ui = classic */(function(){var on=true,v=null;try{v=localStorage.getItem('crm:ui')}catch(e){}if(v==='classic')on=false;if(on)document.documentElement.classList.add('lq')})()</script>
+  <!-- Preserve the original xray-demo hostname's demo selection on local hosts. -->
+  <script>try{if(!location.search&&!location.hash)history.replaceState(null,'','?vert=clinic#/planner?p=prevm');if(!new URLSearchParams(location.search).has('org'))sessionStorage.setItem('demoOrg','xray')}catch(e){}</script>
+  <script type="module" src="assets/index-BSnyPDex.js"></script>
+  <link rel="stylesheet" href="assets/index-CvB-EmRa.css">
+</head>
+<body>
+<!-- заставка: видна с первого кадра (в том числе при запуске с экрана «Домой»), убирается, когда готов вход или данные -->
+<div id="splash" class="splash on" aria-hidden="true"><div class="sp-bg"><i></i><i></i><i></i><i></i></div>
+  <div class="sp-c"><img class="sp-word" src="brand/95sales-wordmark.webp" alt="95sales" width="100" height="26"><span class="sp-org" id="spOrg"></span>
+  <div class="sp-bar"><i></i></div><p class="sp-t" id="spT"></p></div></div>
+
+<div class="login on pending" id="login">
+  <div class="lcard">
+    <div class="glyph">C</div><h2>CRM холдинга</h2><p>Демо-версия · все люди, суммы, звонки и документы вымышлены</p>
+    <div style="text-align:left;font-size:12.5px;color:#B9C8C2;margin:-8px 0 14px">Выберите, под кем войти. У каждой роли свои права: консолидацию холдинга видят только генеральный и финансовый директор, руководитель региона — только свой регион, офис проверяет документы, а поддержка разработчика видит данные замаскированными и только когда вы ей разрешили.</div>
+    <div id="lgErr" style="display:none;background:#FBE9E7;color:#B0433B;padding:10px 12px;border-radius:8px;font-size:13px;margin-bottom:14px;text-align:left"></div>
+    <div id="lgForm">
+    <div style="text-align:left;margin-bottom:12px">
+      <label for="lgEm" style="display:block;font-size:12px;font-weight:600;margin-bottom:5px;opacity:.7">Почта</label>
+      <input id="lgEm" type="email" autocomplete="username" placeholder="name@company.com" style="width:100%;padding:11px 12px;border:1px solid rgba(0,0,0,.16);border-radius:9px;font:inherit;background:#fff;color:#10201B">
+    </div>
+    <div style="text-align:left;margin-bottom:16px">
+      <label for="lgPw" style="display:block;font-size:12px;font-weight:600;margin-bottom:5px;opacity:.7">Пароль</label>
+      <input id="lgPw" type="password" autocomplete="current-password" style="width:100%;padding:11px 12px;border:1px solid rgba(0,0,0,.16);border-radius:9px;font:inherit;background:#fff;color:#10201B">
+    </div>
+    <button id="lgBtn" onclick="doLogin()" style="width:100%;padding:13px;border:none;border-radius:9px;background:#1F6F5C;color:#fff;font:inherit;font-weight:600;cursor:pointer">Войти</button>
+    <button id="lgForgot" type="button" onclick="pwForgotScreen()" style="display:none;width:100%;padding:10px;margin-top:6px;border:none;background:transparent;color:#1F6F5C;font:inherit;font-size:13px;cursor:pointer">Забыли пароль?</button>
+    </div>
+
+    <div id="lgMfa" style="display:none">
+      <div style="text-align:left;margin-bottom:12px">
+        <label for="lgCode" style="display:block;font-size:12px;font-weight:600;margin-bottom:5px;opacity:.7">Код из приложения</label>
+        <input id="lgCode" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000" style="width:100%;padding:11px 12px;border:1px solid rgba(0,0,0,.16);border-radius:9px;font:inherit;background:#fff;color:#10201B;letter-spacing:4px;text-align:center;font-size:18px">
+        <div style="font-size:12px;opacity:.6;margin-top:6px">Откройте Google Authenticator и введите шесть цифр</div>
+      </div>
+      <button id="lgCodeBtn" onclick="doMfaVerify()" style="width:100%;padding:13px;border:none;border-radius:9px;background:#1F6F5C;color:#fff;font:inherit;font-weight:600;cursor:pointer">Подтвердить</button>
+      <button onclick="logout()" style="width:100%;padding:10px;margin-top:8px;border:none;border-radius:9px;background:transparent;color:#666;font:inherit;cursor:pointer">Отмена</button>
+    </div>
+    <div id="loginList" style="display:none"></div>
+    <div class="lfoot">Изменения в демо живут до перезагрузки страницы<br>универсальная сборка · 2.0</div>
+  </div>
+</div>
+
+<div class="demobar" style="display:none">
+  <b>Прототип v3</b><span class="sep"></span><span>Вход как:</span>
+  <select id="userSel" onchange="signIn(this.value)"></select>
+  <span class="hint">Права настраиваются персонально · «Настройки → Пользователи»</span>
+</div>
+
+<div class="mobhead">
+  <span class="glyph">C</span><span class="t" id="mobTitle">Обзор</span><span class="demotag">демо</span>
+  <button class="more tb-rf" onclick="appReload()" aria-label="Обновить" title="Обновить"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"></path><path d="M21 3v5h-5"></path></svg></button>
+  <button class="more" onclick="go('notif')"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin:0" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span class="badge" id="mobBell">0</span></button>
+  <button class="more" onclick="cmdkOpen()" aria-label="Поиск"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg></button>
+  <button class="more" onclick="openSheet('menu')" aria-label="Меню"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin:0" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
+  <span class="avatar" id="mobAvatar">М</span>
+</div>
+
+<header class="topbar" id="topbar">
+  <button class="tb-co" id="tbCo" onclick="openCompany(this)" aria-label="Компания"><span class="glyph" id="tbGlyph">C</span><span class="tb-name" id="tbName">CRM</span>
+    <svg class="tb-chev" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg></button>
+  <button class="tb-search" onclick="cmdkOpen()"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg><span>Поиск пациентов, лидов, разделов</span><kbd class="kbdHint">⌘K</kbd></button>
+  <div class="tb-r">
+    <button class="tb-ic tb-rf" onclick="appReload()" aria-label="Обновить" title="Обновить данные"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"></path><path d="M21 3v5h-5"></path></svg></button>
+    <button class="tb-ic" onclick="go('notif')" aria-label="Уведомления"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span class="badge" id="tbBell"></span></button>
+    <button class="tb-me" onclick="openMe(this)" aria-label="Профиль"><span class="avatar" id="tbAvatar">·</span></button>
+  </div>
+</header>
+<div class="shell">
+  <aside class="rail">
+    <div class="brandmark"><span class="glyph">C</span>
+      <span><span class="t1"><span id="coName">CRM холдинга</span> <span class="demotag">демо</span></span><br><span class="t2" id="coSub">Холдинг</span></span>
+      <button class="railtoggle" id="railToggle" onclick="event.stopPropagation();toggleRail()" title="Свернуть меню" aria-label="Свернуть меню"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5M18 17l-5-5 5-5"></path></svg></button></div>
+    <button class="railsearch" onclick="cmdkOpen()" type="button"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg><span>Поиск</span><kbd id="kbdHint">⌘K</kbd></button>
+    <div class="navhead"><div class="navlabel" id="navLabel">Меню</div>
+      <button class="railtoggle2" onclick="toggleRail()" title="Свернуть меню" aria-label="Свернуть меню"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17-5-5 5-5M18 17l-5-5 5-5"></path></svg></button></div>
+    <nav class="nav" id="nav"></nav>
+    <div class="railfoot">
+      <div class="who"><span class="avatar" id="railAvatar">М</span>
+        <span><span class="n" id="railName">—</span><br><span class="r" id="railRole">—</span></span></div>
+      <a href="." onclick="lockNow();return false" style="display:block;padding:6px 8px 0;font-size:12px;color:var(--muted);text-decoration:none"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>Заблокировать экран</a>
+      <a href="." onclick="logout();return false" style="display:block;padding:6px 8px;font-size:12px;color:var(--muted);text-decoration:none"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"></path></svg>Сменить роль</a>
+      <a href="." onclick="demoReset();return false" style="display:block;padding:2px 8px 6px;font-size:12px;color:var(--muted);text-decoration:none">↺ Сбросить демо</a>
+    </div>
+  </aside>
+  <main class="main" id="view"></main>
+</div>
+
+<nav class="tabbar" id="tabbar"></nav>
+<button class="fab" id="fab" onclick="fabAction()">+</button>
+<div class="scrim" id="scrim" onclick="sheetX()"></div>
+<div class="sheet" id="sheet">
+  <div class="sheethead"><h2 id="sheetTitle"></h2><button class="x" onclick="sheetX()">×</button></div>
+  <div class="sheetbody" id="sheetBody"></div>
+  <div class="sheetfoot" id="sheetFoot"></div>
+</div>
+<div class="toast" id="toast"></div>
+<div class="ctip" id="ctip"></div>
+<div class="wmark" id="wmark"></div>
+<div class="lock" id="lock"><div class="lcard">
+  <div class="glyph">🔒</div><h2 class="lname"></h2><p class="lmsg"></p>
+  <input id="lockPw" type="password" autocomplete="current-password" placeholder="Пароль" onkeydown="if(event.key==='Enter')unlock()">
+  <div class="lerr"></div>
+  <button class="go1" onclick="unlock()">Продолжить</button>
+  <button class="go2" onclick="lockOut()">Выйти и войти под другим пользователем</button>
+  <div class="lfoot">В демо подходит любой пароль от 4 символов</div>
+</div></div>
+<div id="printArea"></div>
+
+<script type="text/x-crm-app" id="appjs" data-src="/rentgen/assets/app-016405e0fe.js"></script>
+
+
+</body>
