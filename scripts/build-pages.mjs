@@ -5,7 +5,7 @@ const out = path.join(root, 'dist');
 const base = '/rentgen/';
 await rm(out, { recursive: true, force: true });
 await mkdir(out, { recursive: true });
-for (const name of ['index.html', 'rx.html', '_external', 'assets', 'body3d', 'brand', 'demo', 'dent3d', 'i18n', 'icons', 'manifest.webmanifest', 'vendor', 'xray']) {
+for (const name of ['index.html', 'rx.html', 'smile.html', '_external', 'assets', 'body3d', 'brand', 'demo', 'dent3d', 'i18n', 'icons', 'manifest.webmanifest', 'vendor', 'xray']) {
   await cp(path.join(root, name), path.join(out, name), { recursive: true });
 }
 async function rewrite(dir) {
@@ -18,6 +18,7 @@ async function rewrite(dir) {
     s = s.replace(/fetch\((["'])\/\?upd=/g, `fetch($1${base}?upd=`);
     // Patient results are static HTML pages on GitHub Pages, not root-domain routes.
     s = s.replace('location.origin+(/^(localhost|127\\.)/.test(location.hostname)?"/rx.html#":"/rx#")', `location.origin+"${base}rx.html#"`);
+    s = s.replace('location.origin+(/^(localhost|127\\.)/.test(location.hostname)?"/smile.html#":"/smile#")', `location.origin+"${base}smile.html#"`);
     if (item.name === 'manifest.webmanifest') s = s.replace(/"(start_url|scope)": "\/"/g, `"$1": "${base}"`);
     if (item.name === 'index.html') {
       s = s.replace('<head>', `<head><base href="${base}">`);

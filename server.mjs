@@ -13,9 +13,10 @@ const server = http.createServer(async (req, res) => {
     }
     let pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     if (pathname === '/rx') pathname = '/rx.html';
+    if (pathname === '/smile') pathname = '/smile.html';
     const file = path.resolve(root, '.' + (pathname === '/' ? '/index.html' : pathname));
     const relative = path.relative(root, file);
-    if (relative.startsWith('..') || path.isAbsolute(relative) || relative.split(path.sep).some(part => part.startsWith('.')) || !['index.html', 'assets', 'brand', '_external', 'i18n', 'xray', 'vendor', 'dent3d', 'icons', 'demo', 'body3d', 'rx.html', 'manifest.webmanifest'].includes(relative.split(path.sep)[0])) {
+    if (relative.startsWith('..') || path.isAbsolute(relative) || relative.split(path.sep).some(part => part.startsWith('.')) || !['index.html', 'assets', 'brand', '_external', 'i18n', 'xray', 'vendor', 'dent3d', 'icons', 'demo', 'body3d', 'rx.html', 'smile.html', 'manifest.webmanifest'].includes(relative.split(path.sep)[0])) {
       res.writeHead(404).end('Not found');
       return;
     }
