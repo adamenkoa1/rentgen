@@ -27,3 +27,5 @@ The original dental modules are included at `/dent3d/patient.js` and `/dent3d/ja
 ## GitHub Pages publication
 
 Run `npm run build:pages` to generate `dist/` for `https://adamenkoa1.github.io/rentgen/`. This adapts resource paths in the generated copy; original application assets remain unchanged. The generated site is published to the `gh-pages` branch. In GitHub repository Settings → Pages, choose Deploy from a branch, `gh-pages`, `/ (root)`, then Save. Publication still requires GitHub Pages to be enabled; pushing a branch alone does not establish a live website. After future changes rebuild and republish the generated files.
+
+The original patient X-ray result page is included as `rx.html` (local alias `/rx`). The GitHub Pages build generates patient links at `/rentgen/rx.html#…`. Image zoom, report, recommendations, clinic telephone link, and browser print/PDF are retained. Third-party Cloudflare analytics was omitted from this copied patient page. The dental patient page `/smile` has not yet been supplied and its shared links remain incomplete.
